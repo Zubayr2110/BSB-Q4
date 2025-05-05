@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="uz">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BSB 11-B Developed By 251-School</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f0f8ff;
+        text-align: center;
+        padding: 50px 20px;
+      }
+
+      h1 {
+        color: #2c3e50;
+      }
+
+      .input-group {
+        margin: 10px auto;
+        max-width: 300px;
+      }
+
+      input[type="text"] {
+        padding: 10px;
+        width: 100%;
+        box-sizing: border-box;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+        font-size: 16px;
+      }
+
+      button {
+        padding: 12px 25px;
+        background-color: #3498db;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 16px;
+        margin-top: 10px;
+        width: 100%;
+        max-width: 300px;
+      }
+
+      #natija {
+        color: #34495e;
+        font-size: 18px;
+        margin-top: 20px;
+        background-color: #e0f7fa;
+        display: inline-block;
+        padding: 15px 25px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        max-width: 90%;
+        word-wrap: break-word;
+      }
+
+      @media (min-width: 600px) {
+        input[type="text"],
+        button {
+          max-width: 400px;
+          font-size: 18px;
+        }
+
+        #natija {
+          font-size: 20px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Sevimli kitobingiz haqida yozing</h1>
+
+    <div class="input-group">
+      <input type="text" id="muallif" placeholder="Muallif" />
+    </div>
+    <div class="input-group">
+      <input type="text" id="kitob" placeholder="Kitob nomi" />
+    </div>
+    <div class="input-group">
+      <input type="text" id="janr" placeholder="Janr" />
+    </div>
+    <div class="input-group">
+      <button onclick="korsat()">Ko‘rsatish</button>
+    </div>
+
+    <p id="natija"></p>
+
+    <script>
+      function korsat() {
+        let muallif = document.getElementById("muallif").value;
+        let kitob = document.getElementById("kitob").value;
+        let janr = document.getElementById("janr").value;
+
+        if (muallif && kitob && janr) {
+          let jumla = `Mening sevimli kitobim ${muallif}ning "${kitob}" ${janr}i.`;
+          document.getElementById("natija").textContent = jumla;
+
+          // Ma'lumotlarni localStorage ga saqlash
+          let malumot = {
+            muallif: muallif,
+            kitob: kitob,
+            janr: janr,
+            jumla: jumla,
+          };
+          localStorage.setItem("sevimliKitob", JSON.stringify(malumot));
+
+          // Inputlarni tozalash
+          document.getElementById("muallif").value = "";
+          document.getElementById("kitob").value = "";
+          document.getElementById("janr").value = "";
+        } else {
+          document.getElementById("natija").textContent =
+            "Iltimos, barcha maydonlarni to‘ldiring.";
+        }
+      }
+
+      // Sahifa yuklanganda localStorage dan ma'lumotni olish
+      window.onload = function () {
+        let saqlangan = localStorage.getItem("sevimliKitob");
+        if (saqlangan) {
+          let data = JSON.parse(saqlangan);
+          document.getElementById("muallif").value = data.muallif;
+          document.getElementById("kitob").value = data.kitob;
+          document.getElementById("janr").value = data.janr;
+          document.getElementById("natija").textContent = data.jumla;
+        }
+      };
+    </script>
+  </body>
+</html>
